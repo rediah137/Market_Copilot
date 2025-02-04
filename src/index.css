@@ -1,0 +1,221 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Properties */
+:root {
+  /* Light mode colors */
+  --shadow-color: 220 3% 15%;
+  --shadow-strength: 1%;
+  
+  --shadow-l1: 
+    0 1px 2px -1px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%)),
+    0 1px 3px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 3%));
+  
+  --shadow-l2:
+    0 4px 6px -1px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%)),
+    0 2px 4px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 3%));
+  
+  --bg-primary: 0 0% 100%;
+  --bg-secondary: 210 40% 98%;
+  --text-primary: 220 25% 15%;
+  --text-secondary: 220 15% 35%;
+  --accent-primary: 215 89% 45%;
+  --accent-secondary: 255 91% 65%;
+  
+  /* Custom color palette */
+  --color-primary: 215 89% 45%;      /* Royal Blue */
+  --color-secondary: 255 91% 65%;    /* Electric Purple */
+  --color-success: 142 72% 29%;      /* Forest Green */
+  --color-warning: 36 100% 45%;      /* Deep Orange */
+  --color-danger: 354 70% 45%;       /* Ruby Red */
+  --color-neutral: 220 15% 35%;      /* Slate Gray */
+}
+
+/* Day mode colors - High contrast, easy reading */
+.day {
+  --bg-primary: 210 40% 98%;
+  --bg-secondary: 0 0% 100%;
+  --text-primary: 220 35% 15%;
+  --text-secondary: 220 25% 35%;
+  --accent-primary: 210 100% 50%;
+  --accent-secondary: 250 100% 60%;
+  
+  /* Custom color palette for day mode */
+  --color-primary: 210 100% 50%;     /* Pure Blue */
+  --color-secondary: 250 100% 60%;    /* Vibrant Purple */
+  --color-success: 142 76% 36%;      /* Clear Green */
+  --color-warning: 32 95% 44%;       /* Clear Orange */
+  --color-danger: 0 84% 60%;         /* Clear Red */
+  --color-neutral: 220 25% 35%;      /* Clear Gray */
+}
+
+/* Day mode specific styles */
+.day .bg-gradient {
+  background: linear-gradient(to bottom right, #f8faff 0%, #fff 100%);
+}
+
+.day .card,
+.day .input,
+.day .btn {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode colors */
+.dark {
+  --bg-primary: 222 47% 11%;
+  --bg-secondary: 217 33% 17%;
+  --text-primary: 210 40% 98%;
+  --text-secondary: 215 20% 65%;
+  --accent-primary: 217 91% 60%;
+  --accent-secondary: 250 89% 65%;
+  
+  /* Custom color palette for dark mode */
+  --color-primary: 217 91% 60%;      /* Bright Blue */
+  --color-secondary: 250 89% 65%;    /* Electric Purple */
+  --color-success: 142 71% 45%;      /* Bright Green */
+  --color-warning: 37 95% 58%;       /* Bright Orange */
+  --color-danger: 0 84% 60%;         /* Bright Red */
+  --color-neutral: 215 20% 65%;      /* Light Gray */
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes ticker {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.bg-grid-pattern {
+  background-image: linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.dark .bg-grid-pattern {
+  background-image: linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+}
+
+.animate-ticker {
+  animation: ticker 40s linear infinite;
+  will-change: transform;
+}
+
+/* Base Styles */
+@layer base {
+  body {
+    @apply antialiased bg-white dark:bg-gray-900;
+    background-color: hsl(var(--bg-primary));
+    color: hsl(var(--text-primary));
+  }
+  
+  .dark body {
+    background-color: hsl(var(--bg-primary));
+    color: hsl(var(--text-primary));
+  }
+}
+
+/* Component Styles */
+@layer components {
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 
+           transition-all duration-300 ease-in-out
+           hover:shadow-xl hover:scale-[1.02]
+           shadow-gray-200/50 dark:shadow-gray-900/50;
+  }
+
+  .input {
+    @apply bg-transparent border border-gray-200
+           rounded-lg px-4 py-2 focus:outline-none focus:ring-2 
+           focus:ring-blue-500/20 dark:focus:ring-blue-400/20 
+           transition-all duration-200
+           dark:border-gray-700;
+  }
+
+  .btn {
+    @apply px-6 py-2 rounded-lg font-medium
+           transition-all duration-200 ease-in-out
+           disabled:opacity-50 disabled:cursor-not-allowed
+           active:scale-95;
+  }
+
+  .btn-primary {
+    @apply bg-blue-500 text-white hover:bg-blue-600
+           dark:bg-blue-600 dark:hover:bg-blue-700;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-700 hover:bg-gray-200
+           dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600;
+  }
+}
+
+/* Utility Classes */
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r 
+           from-[#2563eb] to-[#7c3aed]
+           hover:from-[#3b82f6] hover:to-[#8b5cf6]
+           dark:from-[#60a5fa] dark:to-[#a78bfa]
+           dark:hover:from-[#93c5fd] dark:hover:to-[#c4b5fd];
+  }
+
+  .bg-gradient {
+    @apply bg-gradient-to-br from-[#f8faff] to-[#faf5ff]
+           dark:from-gray-900 dark:to-gray-800;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.3s ease-out forwards;
+  }
+  
+  .group:hover .group-hover\:scale-x-100 {
+    transform: scaleX(1);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-600;
+}
